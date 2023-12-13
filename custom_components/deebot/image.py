@@ -59,10 +59,12 @@ class DeebotMap(
             hass=hass,
         )
         self._attr_extra_state_attributes: MutableMapping[str, Any] = {}
+        self._attr_content_type = "image/svg+xml"
+
 
     def image(self) -> bytes | None:
         """Return bytes of image."""
-        return base64.decodebytes(self._device.map.get_base64_map())
+        return self._device.map.get_svg_map().encode()
 
     async def async_added_to_hass(self) -> None:
         """Set up the event listeners now that hass is ready."""
